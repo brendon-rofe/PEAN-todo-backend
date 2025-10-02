@@ -1,11 +1,11 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 
 const app = express()
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/all', (req, res) => {
+app.get('/all', (req: Request, res: Response) => {
   res.send();
 })
 
