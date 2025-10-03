@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
+var cors = require('cors')
 import { PrismaClient } from '../generated/prisma';
 
 const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 3000;
 
+app.use(cors())
 app.use(express.json());
 
 app.post('/create', async (req: Request, res: Response) => {
