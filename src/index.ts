@@ -23,6 +23,16 @@ app.get('/all', async (req: Request, res: Response) => {
   res.json(allTodos);
 });
 
+app.get('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const todo = await prisma.todo.findUnique({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json(todo);
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
