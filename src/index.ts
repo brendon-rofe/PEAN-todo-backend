@@ -46,6 +46,19 @@ app.put('/update-description/:id', async (req: Request, res: Response) => {
   res.json(updatedTodo);
 });
 
+app.put('/update-status/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const updatedTodo = await prisma.todo.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      done: true,
+    },
+  });
+  res.json(updatedTodo);
+});
+
 app.delete('/delete/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const deletedTodo = await prisma.todo.delete({
