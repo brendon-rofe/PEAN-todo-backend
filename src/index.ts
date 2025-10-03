@@ -33,6 +33,19 @@ app.get('/:id', async (req: Request, res: Response) => {
   res.json(todo);
 });
 
+app.put('/update-description/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const updatedTodo = await prisma.todo.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      description: req.body.description,
+    },
+  });
+  res.json(updatedTodo);
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
