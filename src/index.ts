@@ -48,14 +48,31 @@ app.put('/update-description/:id', async (req: Request, res: Response) => {
 
 app.put('/update-status/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const updatedTodo = await prisma.todo.update({
+  let updatedTodo;
+  const todo = await prisma.todo.findUnique({
     where: {
       id: Number(id),
     },
-    data: {
-      done: true,
-    },
   });
+  if(todo?.done === true) {
+    updatedTodo = await prisma.todo.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        done: false,
+      },
+    });
+  } else if (todo?.done === false) {
+    updatedTodo = await prisma.todo.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        done: true,
+      },
+    });
+  }
   res.json(updatedTodo);
 });
 
